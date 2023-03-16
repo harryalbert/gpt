@@ -1,17 +1,39 @@
-import Head from "next/head";
-import Image from "next/image";
-import {Inter} from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import {SyntheticEvent} from "react";
+import {Configuration, OpenAIApi} from "openai";
 
-const inter = Inter({subsets: ["latin"]});
+const DEFAULT_PARAMS = {
+	model: "text-davinci-002",
+	temperature: 0.7,
+	max_tokens: 256,
+	top_p: 1,
+	frequency_penalty: 0,
+	presence_penalty: 0,
+};
+
+export async function query(params = {}) {
+	const {Configuration, OpenAIApi} = require("openai");
+	const configuration = new Configuration({
+		apiKey: process.env.OPENAI_API_KEY,
+	});
+	const openai = new OpenAIApi(configuration);
+	const response = await openai.createCompletion({
+		model: "text-davinci-003",
+		prompt: "Say this is a test",
+		temperature: 0,
+		max_tokens: 7,
+	});
+
+	return response;
+}
 
 export default function Home() {
 	const s = process.env.SECRET_KEY;
-	const handleSubmit = (e: any) => {
+
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		console.log(e.target.elements.first_name.value);
-		console.log(s);
+		// console.log(e.target.elements.first_name.value);
+
+		const q = await query();
+		console.log(q);
 	};
 
 	return (
