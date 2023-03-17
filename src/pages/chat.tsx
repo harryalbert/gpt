@@ -1,30 +1,3 @@
-import {Configuration, OpenAIApi} from "openai";
-
-const DEFAULT_PARAMS = {
-	model: "text-davinci-002",
-	temperature: 0.7,
-	max_tokens: 256,
-	top_p: 1,
-	frequency_penalty: 0,
-	presence_penalty: 0,
-};
-
-export async function query(params = {}) {
-	const {Configuration, OpenAIApi} = require("openai");
-	const configuration = new Configuration({
-		apiKey: process.env.OPENAI_API_KEY,
-	});
-	const openai = new OpenAIApi(configuration);
-	const response = await openai.createCompletion({
-		model: "text-davinci-003",
-		prompt: "Say this is a test",
-		temperature: 0,
-		max_tokens: 7,
-	});
-
-	return response;
-}
-
 export default function Home() {
 	const s = process.env.SECRET_KEY;
 
@@ -32,8 +5,27 @@ export default function Home() {
 		e.preventDefault();
 		// console.log(e.target.elements.first_name.value);
 
-		const q = await query();
-		console.log(q);
+		try {
+			const response = await fetch("/api/generate", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({animal: "hello baby"}),
+			});
+
+			const data = await response.json();
+			if (response.status !== 200) {
+				throw (
+					data.error ||
+					new Error(`Request failed with status ${response.status}`)
+				);
+			}
+
+			console.log(data.result);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
