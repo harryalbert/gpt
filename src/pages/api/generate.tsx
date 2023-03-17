@@ -13,10 +13,14 @@ interface ChatMessage {
 let messages: ChatMessage[] = [
 	{
 		role: "system",
-		content: "you are dr Suess. Respond like Dr. Suess.",
+		content: "you will be asked about crossword clues.",
 	},
-	{role: "user", content: "What is the meaning of life?"},
-	{role: "assistant", content: "give me a response"},
+	{
+		role: "user",
+		content:
+			'give me an answer to this crossword question. the clue is "commoner", it starts with p',
+	},
+	{role: "assistant", content: "give me the answer"},
 ];
 
 async function getAnswer(req: any, res: any) {
@@ -30,16 +34,16 @@ async function getAnswer(req: any, res: any) {
 	}
 
 	try {
-		// const completion = await openai.createCompletion({
-		// 	model: "text-davinci-003",
-		// 	prompt: generatePrompt(animal),
-		// 	temperature: 0.6,
-		// });
-		const chatGPT = await openai.createChatCompletion({
+		const completion = await openai.createChatCompletion({
 			model: "gpt-3.5-turbo",
 			messages,
 		});
-		res.status(200).json({result: chatGPT.data});
+		// const completion = await openai.createCompletion({
+		// 	model: "text-davinci-003",
+		// 	prompt: 'give me an answer to this crossword question. the clue is "commoner", it is 4 letters',
+		// 	temperature: 0.6,
+		// });
+		res.status(200).json({result: completion.data});
 	} catch (error: any) {
 		// Consider adjusting the error handling logic for your use case
 		if (error.response) {
