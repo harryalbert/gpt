@@ -10,18 +10,15 @@ interface ChatMessage {
 	content: string;
 }
 
-let messages: ChatMessage[] = [
-	{
-		role: "system",
-		content: "you will be asked about crossword clues.",
-	},
-	{
-		role: "user",
-		content:
-			'give me an answer to this crossword question. the clue is "commoner", it starts with p',
-	},
-	{role: "assistant", content: "give me the answer"},
-];
+function generateQuestion(clue: string, numLetters: number, letters: string[]) {
+	let question = `answer to crossword clue "${clue}", with exactly ${numLetters} letters.`;
+	for (let i = 0; i < letters.length; i++) {
+		if (letters[i] !== "") {
+			question += ` Letter ${i + 1} is ${letters[i]}.`;
+		}
+	}
+	return question;
+}
 
 async function getAnswer(req: any, res: any) {
 	if (!configuration.apiKey) {
@@ -33,16 +30,36 @@ async function getAnswer(req: any, res: any) {
 		return;
 	}
 
+	if (!req.body.clue || !req.body.numLetters || !req.body.letters) {
+		res.status(400).json({
+			error: {
+				message: "Missing required parameters",
+			},
+		});
+		return;
+	}
+
+	let messages: ChatMessage[] = [
+		{
+			role: "system",
+			content:
+				"you will be asked to answer or give hints about crossword clues.",
+		},
+		{
+			role: "user",
+			content: generateQuestion(
+				req.body.clue,
+				req.body.numLetters,
+				req.body.letters
+			),
+		},
+	];
+
 	try {
 		const completion = await openai.createChatCompletion({
 			model: "gpt-3.5-turbo",
 			messages,
 		});
-		// const completion = await openai.createCompletion({
-		// 	model: "text-davinci-003",
-		// 	prompt: 'give me an answer to this crossword question. the clue is "commoner", it is 4 letters',
-		// 	temperature: 0.6,
-		// });
 		res.status(200).json({result: completion.data});
 	} catch (error: any) {
 		// Consider adjusting the error handling logic for your use case

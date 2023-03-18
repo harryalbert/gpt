@@ -11,7 +11,11 @@ export default function Home() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({animal: "hello baby"}),
+				body: JSON.stringify({
+					clue: "Merry air",
+					numLetters: 4,
+					letters: ["", "", "", ""],
+				}),
 			});
 
 			const data = await response.json();
