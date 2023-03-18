@@ -11,7 +11,7 @@ interface ChatMessage {
 }
 
 function generateQuestion(clue: string, numLetters: number, letters: string[]) {
-	let question = `answer to crossword clue "${clue}", with exactly ${numLetters} letters.`;
+	let question = `answer to crossword clue "${clue}", must be exactly ${numLetters} letters.`;
 	for (let i = 0; i < letters.length; i++) {
 		if (letters[i] !== "") {
 			question += ` Letter ${i + 1} is ${letters[i]}.`;
@@ -40,11 +40,6 @@ async function getAnswer(req: any, res: any) {
 	}
 
 	let messages: ChatMessage[] = [
-		{
-			role: "system",
-			content:
-				"you will be asked to answer or give hints about crossword clues.",
-		},
 		{
 			role: "user",
 			content: generateQuestion(
