@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-input-title {
+	@apply block mb-1 mt-3 text-base font-medium text-black;
+}
+
 .text-input {
-	@apply border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:border-gray-500;
+	@apply border text-sm rounded-lg block w-full p-2.5 bg-gray-200 border-gray-200 text-black outline-none focus:border-gray-400;
 }
