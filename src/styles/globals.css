@@ -16,9 +16,4 @@ body {
 
 a {
 	color: inherit;
-	text-decoration: none;
-}
-
-.text-input {
-	@apply border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:border-gray-500;
 }

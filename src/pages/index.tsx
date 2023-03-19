@@ -48,7 +48,7 @@ export default function Home() {
 			<form onSubmit={handleSubmit}>
 				<div className="grid gap-6 mb-g6 md:grid-cols-2">
 					<div>
-						<label className="block mb-1 mt-3 text-sm font-medium text-gray-900 dark:text-white">
+						<label className="block mb-1 mt-3 text-med font-medium text-gray-900 dark:text-white">
 							Crossword Clue
 						</label>
 						<input
@@ -57,7 +57,7 @@ export default function Home() {
 							className="text-input"
 							required
 						></input>
-						<label className="block mb-1 mt-3 text-sm font-medium text-gray-900 dark:text-white">
+						<label className="block mb-1 mt-3 text-med font-medium text-gray-900 dark:text-white">
 							Number of Letters
 						</label>
 						<input
@@ -68,7 +68,7 @@ export default function Home() {
 						></input>
 						<input
 							type="submit"
-							className="text-lg font-medium bg-blue-900 mt-3 p-0.5 px-1 rounded"
+							className="text-lg text-white font-thin bg-blue-900 mt-3 p-0.5 px-1 rounded"
 						/>
 					</div>
 				</div>
