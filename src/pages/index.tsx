@@ -5,16 +5,12 @@ export default function Home() {
 	const s = process.env.SECRET_KEY;
 	const [loading, setLoading] = useState(false);
 	const [answer, setAnswer] = useState("");
-	const [numLetters, setNumLetters] = useState<number | null>(0);
-	const [letters, setLetters] = useState([]);
+	const [numLetters, setNumLetters] = useState<number | null>(1);
+	const [letters, setLetters] = useState<string[]>([]);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 
-		let letters = [];
-		for (let i = 0; i < e.target.elements.num_letters.value; i++) {
-			letters.push("");
-		}
 		try {
 			setLoading(true);
 
@@ -58,7 +54,7 @@ export default function Home() {
 							id="clue"
 							className="text-input"
 							required
-						></input>
+						/>
 						<label className="text-input-title">
 							Number of Letters
 						</label>
@@ -75,16 +71,53 @@ export default function Home() {
 								}
 
 								let val = parseInt(e.target.value);
-								if (val < 20) {
+								if (val <= 20) {
 									setNumLetters(val);
+									if (val != numLetters) {
+										const newLetters = [];
+										for (let i = 0; i < val; i++) {
+											if (i < letters.length) {
+												newLetters.push(letters[i]);
+											} else {
+												newLetters.push("");
+											}
+										}
+									}
 								}
 							}}
 							required
-						></input>
-						<div>
+						/>
+						<div className="flex-row">
 							{(numLetters ?? 0) > 0 &&
 								[...Array(numLetters)].map((_, i) => (
-									<a key={i}>test</a>
+									<input
+										type="text"
+										id={`letter_${i}`}
+										key={i}
+										className="border-4 border-black outline-none focus:border-blue-600 mt-3 w-16 h-16 text-center text-lg"
+										placeholder='" "'
+										onChange={(e) => {
+											const index = parseInt(
+												e.target.id.split("_")[1]
+											);
+											const newLetters = [];
+											for (
+												let i = 0;
+												i < letters.length;
+												i++
+											) {
+												if (i === index) {
+													newLetters.push(
+														e.target.value
+													);
+												} else {
+													newLetters.push(letters[i]);
+												}
+											}
+											setLetters(newLetters);
+											console.log(newLetters);
+										}}
+									/>
 								))}
 						</div>
 						<input
