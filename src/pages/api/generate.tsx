@@ -1,4 +1,4 @@
-import {Configuration, OpenAIApi} from "openai";
+import {ChatCompletionRequestMessage, Configuration, OpenAIApi} from "openai";
 
 const configuration = new Configuration({
 	apiKey: process.env.OPENAI_API_KEY,
@@ -39,7 +39,7 @@ async function getAnswer(req: any, res: any) {
 		return;
 	}
 
-	let messages: ChatMessage[] = [
+	let messages: ChatCompletionRequestMessage[] = [
 		{
 			role: "user",
 			content: generateQuestion(
