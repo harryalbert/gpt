@@ -2,10 +2,14 @@ import Loading from "@/components/LoadingIcon";
 import {useState} from "react";
 
 export default function Home() {
+	const maxNumLetters = 20;
+
 	const [loading, setLoading] = useState(false);
 	const [answer, setAnswer] = useState("");
-	const [numLetters, setNumLetters] = useState<number | null>(1);
-	const [letters, setLetters] = useState<string[]>([""]);
+	const [numLetters, setNumLetters] = useState<number | null>(5);
+	const [letters, setLetters] = useState<string[]>(
+		[...Array(maxNumLetters)].map(() => "")
+	);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -21,7 +25,10 @@ export default function Home() {
 				body: JSON.stringify({
 					clue: e.target.elements.clue.value,
 					numLetters: e.target.elements.num_letters.value,
-					letters,
+					letters: letters.slice(
+						0,
+						e.target.elements.num_letters.value
+					),
 				}),
 			});
 
@@ -72,17 +79,6 @@ export default function Home() {
 								let val = parseInt(e.target.value);
 								if (val <= 20) {
 									setNumLetters(val);
-									if (val != numLetters) {
-										const newLetters = [];
-										for (let i = 0; i < val; i++) {
-											if (i < letters.length) {
-												newLetters.push(letters[i]);
-											} else {
-												newLetters.push("");
-											}
-										}
-										setLetters(newLetters);
-									}
 								}
 							}}
 							required
@@ -95,7 +91,7 @@ export default function Home() {
 										id={`letter_${i}`}
 										key={i}
 										value={letters[i] ?? ""}
-										className="border-4 border-black outline-none focus:border-blue-600 mt-3 w-16 h-16 text-center text-lg"
+										className="border-4 border-black outline-none focus:border-blue-600 mt-3 m-1 w-16 h-16 text-center text-lg"
 										placeholder='" "'
 										onChange={(e) => {
 											const index = parseInt(
