@@ -5,11 +5,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-interface ChatMessage {
-	role: string;
-	content: string;
-}
-
 function generateQuestion(clue: string, numLetters: number, letters: string[]) {
 	let question = `answer to crossword clue "${clue}", must be exactly ${numLetters} letters.`;
 	for (let i = 0; i < letters.length; i++) {
@@ -57,7 +52,6 @@ async function getAnswer(req: any, res: any) {
 		});
 		res.status(200).json({result: completion.data});
 	} catch (error: any) {
-		// Consider adjusting the error handling logic for your use case
 		if (error.response) {
 			console.error(error.response.status, error.response.data);
 			res.status(error.response.status).json(error.response.data);

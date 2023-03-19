@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .text-input-title {
-	@apply block mb-1 mt-3 text-base font-medium text-black;
+	@apply block mb-1 mt-3 text-base font-medium text-black text-center;
 }
 
 .text-input {
-	@apply border text-sm rounded-lg block w-full p-2.5 bg-gray-200 border-gray-200 text-black outline-none focus:border-gray-400;
+	@apply border text-sm text-center rounded-lg block w-full p-2.5 bg-gray-200 border-gray-200 text-black outline-none focus:border-gray-400;
 }
