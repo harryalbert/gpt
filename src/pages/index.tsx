@@ -6,7 +6,7 @@ export default function Home() {
 	const [loading, setLoading] = useState(false);
 	const [answer, setAnswer] = useState("");
 	const [numLetters, setNumLetters] = useState<number | null>(1);
-	const [letters, setLetters] = useState<string[]>([]);
+	const [letters, setLetters] = useState<string[]>([""]);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -82,6 +82,7 @@ export default function Home() {
 												newLetters.push("");
 											}
 										}
+										setLetters(newLetters);
 									}
 								}
 							}}
@@ -94,6 +95,7 @@ export default function Home() {
 										type="text"
 										id={`letter_${i}`}
 										key={i}
+										value={letters[i] ?? ""}
 										className="border-4 border-black outline-none focus:border-blue-600 mt-3 w-16 h-16 text-center text-lg"
 										placeholder='" "'
 										onChange={(e) => {
@@ -107,15 +109,22 @@ export default function Home() {
 												i++
 											) {
 												if (i === index) {
-													newLetters.push(
-														e.target.value
-													);
+													const val =
+														e.target.value.toUpperCase();
+													if (val.length <= 1) {
+														newLetters.push(val);
+													} else {
+														newLetters.push(
+															val.slice(
+																val.length - 1
+															)
+														);
+													}
 												} else {
 													newLetters.push(letters[i]);
 												}
 											}
 											setLetters(newLetters);
-											console.log(newLetters);
 										}}
 									/>
 								))}
