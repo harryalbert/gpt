@@ -2,7 +2,6 @@ import Loading from "@/components/LoadingIcon";
 import {useState} from "react";
 
 export default function Home() {
-	const s = process.env.SECRET_KEY;
 	const [loading, setLoading] = useState(false);
 	const [answer, setAnswer] = useState("");
 	const [numLetters, setNumLetters] = useState<number | null>(1);
