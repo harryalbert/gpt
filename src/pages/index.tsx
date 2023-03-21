@@ -135,7 +135,8 @@ export default function Home() {
 								} border border-gray-400 m-1 mt-3 p-1`}
 								onClick={(e) => {
 									e.preventDefault();
-									setSelectedButton(e.target.id);
+									const target = e.target as HTMLInputElement;
+									setSelectedButton(target.id);
 								}}
 							>
 								{title}
