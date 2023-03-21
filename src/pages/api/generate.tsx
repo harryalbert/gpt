@@ -5,11 +5,16 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-function generateQuestion(clue: string, numLetters: number, letters: string[]) {
-	let question = `answer to crossword clue "${clue}", must be exactly ${numLetters} letters.`;
+function generateQuestion(
+	clue: string,
+	numLetters: number,
+	letters: string[],
+	type: string
+) {
+	let question = `${type}, ${clue}, ${numLetters} letters`;
 	for (let i = 0; i < letters.length; i++) {
 		if (letters[i] !== "") {
-			question += ` Letter ${i + 1} is ${letters[i]}.`;
+			question += `, ${i + 1} letter is ${letters[i]}.`;
 		}
 	}
 	return question;
@@ -37,10 +42,20 @@ async function getAnswer(req: any, res: any) {
 	let messages: ChatCompletionRequestMessage[] = [
 		{
 			role: "user",
+			content: `give me a ${req.body.type} for the following crossword clue`,
+		},
+		{
+			role: "assistant",
+			content:
+				"Sure, what's the crossword clue you need a hint for? Please provide the length of the word and any letters you already have.",
+		},
+		{
+			role: "user",
 			content: generateQuestion(
 				req.body.clue,
 				req.body.numLetters,
-				req.body.letters
+				req.body.letters,
+				req.body.type
 			),
 		},
 	];

@@ -10,7 +10,7 @@ export default function Home() {
 	const [letters, setLetters] = useState<string[]>(
 		[...Array(maxNumLetters)].map(() => "")
 	);
-	const [selectedButton, setSelectedButton] = useState("Easy Hint");
+	const [selectedButton, setSelectedButton] = useState("Hint");
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -30,6 +30,7 @@ export default function Home() {
 						0,
 						e.target.elements.num_letters.value
 					),
+					type: selectedButton,
 				}),
 			});
 
@@ -123,12 +124,7 @@ export default function Home() {
 							))}
 					</div>
 					<div className="flex justify-center">
-						{[
-							"Easy Hint",
-							"Medium Hint",
-							"Hard Hint",
-							"Answer",
-						].map((title, i) => (
+						{["Hint", "Answer"].map((title, i) => (
 							<button
 								key={i}
 								id={title}
