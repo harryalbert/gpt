@@ -1,5 +1,6 @@
 import Loading from "@/components/LoadingIcon";
 import {useState} from "react";
+import Image from "next/image";
 
 export default function Home() {
 	const maxNumLetters = 20;
@@ -51,6 +52,9 @@ export default function Home() {
 
 	return (
 		<>
+			<div className="flex justify-center">
+				<Image src="/logo.png" alt="logo" width={300} height={300} />
+			</div>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label className="text-input-title">Crossword Clue</label>
