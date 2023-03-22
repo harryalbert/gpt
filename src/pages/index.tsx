@@ -1,5 +1,5 @@
 import Loading from "@/components/LoadingIcon";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import Image from "next/image";
 
 export default function Home() {
@@ -50,6 +50,24 @@ export default function Home() {
 		}
 	};
 
+	const handleLetterChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const index = parseInt(e.target.id.split("_")[1]);
+		const newLetters = [];
+		for (let i = 0; i < letters.length; i++) {
+			if (i === index) {
+				const val = e.target.value.toUpperCase();
+				if (val.length <= 1) {
+					newLetters.push(val);
+				} else {
+					newLetters.push(val.slice(val.length - 1));
+				}
+			} else {
+				newLetters.push(letters[i]);
+			}
+		}
+		setLetters(newLetters);
+	};
+
 	return (
 		<>
 			<div className="flex justify-center">
@@ -96,34 +114,7 @@ export default function Home() {
 									value={letters[i] ?? ""}
 									className="border-4 border-black outline-none focus:border-blue-600 mt-3 m-1 w-16 h-16 text-center text-lg"
 									placeholder='" "'
-									onChange={(e) => {
-										const index = parseInt(
-											e.target.id.split("_")[1]
-										);
-										const newLetters = [];
-										for (
-											let i = 0;
-											i < letters.length;
-											i++
-										) {
-											if (i === index) {
-												const val =
-													e.target.value.toUpperCase();
-												if (val.length <= 1) {
-													newLetters.push(val);
-												} else {
-													newLetters.push(
-														val.slice(
-															val.length - 1
-														)
-													);
-												}
-											} else {
-												newLetters.push(letters[i]);
-											}
-										}
-										setLetters(newLetters);
-									}}
+									onChange={handleLetterChange}
 								/>
 							))}
 					</div>
