@@ -69,7 +69,7 @@ export default function Home() {
 	};
 
 	return (
-		<>
+		<div className="max-w-full overflow-auto">
 			<div className="flex justify-center">
 				<Image src="/logo.png" alt="logo" width={300} height={300} />
 			</div>
@@ -124,12 +124,12 @@ export default function Home() {
 						}}
 						required
 					/>
-					<div className="flex justify-center">
+					<div className="flex justify-center flex-wrap">
 						{(numLetters ?? 0) > 0 &&
 							[...Array(numLetters)].map((_, i) => (
 								<div key={i}>
 									<text className="absolute px-3 py-4 text-sm">
-										{i}
+										{i + 1}
 									</text>
 									<input
 										type="text"
@@ -155,6 +155,6 @@ export default function Home() {
 					{loading ? Loading() : answer && <p>{answer}</p>}
 				</div>
 			</form>
-		</>
+		</div>
 	);
 }
