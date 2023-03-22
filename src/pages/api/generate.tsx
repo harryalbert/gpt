@@ -5,12 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-function generateQuestion(
-	clue: string,
-	numLetters: number,
-	letters: string[],
-	type: string
-) {
+function generateQuestion(clue: string, numLetters: number, letters: string[]) {
 	let question = `${clue}, ${numLetters} letters`;
 	for (let i = 0; i < letters.length; i++) {
 		if (letters[i] !== "") {
@@ -53,8 +48,7 @@ async function getAnswer(req: any, res: any) {
 			content: generateQuestion(
 				req.body.clue,
 				req.body.numLetters,
-				req.body.letters,
-				req.body.type
+				req.body.letters
 			),
 		},
 	];
