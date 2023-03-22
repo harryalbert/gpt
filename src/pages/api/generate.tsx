@@ -11,7 +11,7 @@ function generateQuestion(
 	letters: string[],
 	type: string
 ) {
-	let question = `${type}, ${clue}, ${numLetters} letters`;
+	let question = `${clue}, ${numLetters} letters`;
 	for (let i = 0; i < letters.length; i++) {
 		if (letters[i] !== "") {
 			question += `, ${i + 1} letter is ${letters[i]}.`;
@@ -46,8 +46,7 @@ async function getAnswer(req: any, res: any) {
 		},
 		{
 			role: "assistant",
-			content:
-				"Sure, what's the crossword clue you need a hint for? Please provide the length of the word and any letters you already have.",
+			content: `Sure, what's the crossword clue you need a ${req.body.type} for? Please provide the length of the word and any letters you already have.`,
 		},
 		{
 			role: "user",

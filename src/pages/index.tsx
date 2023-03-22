@@ -107,15 +107,19 @@ export default function Home() {
 					<div className="flex justify-center">
 						{(numLetters ?? 0) > 0 &&
 							[...Array(numLetters)].map((_, i) => (
-								<input
-									type="text"
-									id={`letter_${i}`}
-									key={i}
-									value={letters[i] ?? ""}
-									className="border-4 border-black outline-none focus:border-blue-600 mt-3 m-1 w-16 h-16 text-center text-lg"
-									placeholder='" "'
-									onChange={handleLetterChange}
-								/>
+								<div key={i}>
+									<text className="absolute px-3 py-4 text-sm">
+										{i}
+									</text>
+									<input
+										type="text"
+										id={`letter_${i}`}
+										value={letters[i] ?? ""}
+										className="border-4 border-black outline-none focus:border-blue-600 mt-3 m-1 w-16 h-16 text-center text-lg"
+										placeholder='" "'
+										onChange={handleLetterChange}
+									/>
+								</div>
 							))}
 					</div>
 					<div className="flex justify-center">
@@ -141,12 +145,12 @@ export default function Home() {
 					<div className="flex justify-center">
 						<input
 							type="submit"
-							className="text-lg text-black font-thin bg-blue-200 mt-3 p-0.5 px-1 rounded"
+							className="text-lg text-white font-thin bg-blue-700 mt-3 p-0.5 px-1 rounded"
 						/>
 					</div>
 				</div>
 
-				<div className="flex justify-center p-1 pt-5 text-5xl">
+				<div className="flex text-center justify-center p-1 pt-5 text-3xl text-blue-700">
 					{loading ? Loading() : answer && <p>{answer}</p>}
 				</div>
 			</form>
