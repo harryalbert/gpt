@@ -75,6 +75,26 @@ export default function Home() {
 			</div>
 			<form onSubmit={handleSubmit}>
 				<div>
+					<div className="flex justify-center">
+						{["Hint", "Answer"].map((title, i) => (
+							<button
+								key={i}
+								id={title}
+								className={`${
+									selectedButton == title
+										? "bg-blue-200 border-blue-400"
+										: "bg-gray-100 border-gray-400"
+								} border  mx-0 mb-0 mt-2 w-24 p-1`}
+								onClick={(e) => {
+									e.preventDefault();
+									const target = e.target as HTMLInputElement;
+									setSelectedButton(target.id);
+								}}
+							>
+								{title}
+							</button>
+						))}
+					</div>
 					<label className="text-input-title">Crossword Clue</label>
 					<input
 						type="text"
@@ -88,7 +108,7 @@ export default function Home() {
 					<input
 						type="number"
 						id="num_letters"
-						className="text-input"
+						className="text-input mb-3"
 						max="20"
 						value={numLetters ?? ""}
 						onChange={(e) => {
@@ -122,26 +142,7 @@ export default function Home() {
 								</div>
 							))}
 					</div>
-					<div className="flex justify-center">
-						{["Hint", "Answer"].map((title, i) => (
-							<button
-								key={i}
-								id={title}
-								className={`${
-									selectedButton == title
-										? "bg-gray-300"
-										: "bg-gray-100"
-								} border border-gray-400 m-1 mt-3 p-1`}
-								onClick={(e) => {
-									e.preventDefault();
-									const target = e.target as HTMLInputElement;
-									setSelectedButton(target.id);
-								}}
-							>
-								{title}
-							</button>
-						))}
-					</div>
+
 					<div className="flex justify-center">
 						<input
 							type="submit"
