@@ -55,7 +55,7 @@ async function getAnswer(req: any, res: any) {
 
 	try {
 		const completion = await openai.createChatCompletion({
-			model: "gpt-3.5-turbo",
+			model: "gpt-4",
 			messages,
 		});
 		res.status(200).json({result: completion.data});
