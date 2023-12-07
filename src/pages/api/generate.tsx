@@ -9,7 +9,7 @@ function generateQuestion(clue: string, numLetters: number, letters: string[]) {
 	let question = `${clue}, ${numLetters} letters`;
 	for (let i = 0; i < letters.length; i++) {
 		if (letters[i] !== "") {
-			question += `, ${i + 1} letter is ${letters[i]}.`;
+			question += `, ${i + 1} letter is ${letters[i]}`;
 		}
 	}
 	return question;
@@ -33,23 +33,34 @@ async function getAnswer(req: any, res: any) {
 		});
 		return;
 	}
+	if (req.body.type != "Hint" && req.body.type != "Answer") {
+		res.status(400).json({
+			error: {
+				message: "Bad clue type",
+			},
+		});
+		return;
+	}
+
+	let prompt;
+	if (req.body.type == "Hint") {
+		prompt =
+			"I want you to give me a hint for the following crossword clue. Please do not give me the answer. I just want a clue which will lead me in the right direction. Also, more concise is better. Thank you so much!";
+	} else {
+		prompt =
+			"I want you to give me the answer for the following crossword clue. A small explanation would be nice, but please be as concise as possible. Thank you so much!";
+	}
+	prompt += `The clue is ${req.body.clue}, and it has ${req.body.numLetters} letters`;
+	for (let i = 0; i < req.body.letters.length; i++) {
+		if (req.body.letters[i] !== "") {
+			prompt += `The ${i + 1} letter is ${req.body.letters[i]}`;
+		}
+	}
 
 	let messages: ChatCompletionRequestMessage[] = [
 		{
 			role: "user",
-			content: `give me a ${req.body.type} for the following crossword clue`,
-		},
-		{
-			role: "assistant",
-			content: `Sure, what's the crossword clue you need a ${req.body.type} for? Please provide the length of the word and any letters you already have.`,
-		},
-		{
-			role: "user",
-			content: generateQuestion(
-				req.body.clue,
-				req.body.numLetters,
-				req.body.letters
-			),
+			content: prompt,
 		},
 	];
 
