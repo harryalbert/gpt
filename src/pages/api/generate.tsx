@@ -5,16 +5,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-function generateQuestion(clue: string, numLetters: number, letters: string[]) {
-	let question = `${clue}, ${numLetters} letters`;
-	for (let i = 0; i < letters.length; i++) {
-		if (letters[i] !== "") {
-			question += `, ${i + 1} letter is ${letters[i]}`;
-		}
-	}
-	return question;
-}
-
 async function getAnswer(req: any, res: any) {
 	if (!configuration.apiKey) {
 		res.status(500).json({
